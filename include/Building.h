@@ -9,7 +9,7 @@ using namespace std;
 
 class Building {
 private:
-    uint8_t numberWaitingPeople;
+    uint8_t numberPeople;
 
     FloorMap floors;
     Elevator *elevator;

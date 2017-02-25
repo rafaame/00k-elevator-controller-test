@@ -8,8 +8,14 @@ using namespace std;
  *
  * @param uint8_t  number  The floor number.
  */
-Floor::Floor(uint8_t number) {
+Floor::Floor(uint8_t number, uint8_t numberPeople) {
     this->number = number;
+
+    for (uint8_t i = 0; i < numberPeople; i++) {
+        Person *person = new Person();
+
+        waitingPeople.push_back(person);
+    }
 }
 
 /**
@@ -20,36 +26,5 @@ Floor::~Floor() {
         delete *it;
     }
 
-    for (auto it = deliveredPeople.begin(); it != deliveredPeople.end(); it++) {
-        delete *it;
-    }
-
     waitingPeople.clear();
-    deliveredPeople.clear();
-}
-
-/**
- * Initializes the floor with people.
- *
- * @param  uint8_t  numberPeople  The number of people in the floor.
- *
- * @return void
- */
-void Floor::init(uint8_t numberPeople) {
-    for (uint8_t i = 0; i < numberPeople; i++) {
-        Person *person = new Person();
-
-        waitingPeople.push_back(person);
-    }
-}
-
-/**
- * Delivers a person to the floor (add it to the delivered people vector).
- *
- * @param  Person*  person  A pointer to the person to deliver.
- *
- * @return void
- */
-void Floor::deliverPerson(Person *person) {
-    deliveredPeople.push_back(person);
 }

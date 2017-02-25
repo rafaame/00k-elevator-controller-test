@@ -9,7 +9,7 @@ using namespace std;
  * Class constructor.
  */
 Building::Building() {
-    numberWaitingPeople = 0;
+    numberPeople = 0;
 
     elevator = NULL;
 }
@@ -36,7 +36,7 @@ Building::~Building() {
 void Building::init() {
     // Initialize the number of floors to an integer between MIN_FLOORS and MAX_FLOORS (constants defined in common.h)
     uint8_t numberFloors = MIN_FLOORS + (rand() % (MAX_FLOORS - MIN_FLOORS + 1));
-    numberWaitingPeople = 0;
+    numberPeople = 0;
 
     cout << "Initializing elevator with " << (uint32_t) numberFloors << " floors." << endl;
 
@@ -47,20 +47,15 @@ void Building::init() {
         bool shouldHavePeople = (bool) (rand() % 2);
 
         // The number of people in the floor (if it should have any) is an integer
-        // between 1 and (MAX_PEOPLE - total people already in the building) / 4
-        uint8_t numberPeopleFloor = shouldHavePeople ? (rand() % ((MAX_PEOPLE - numberWaitingPeople) / 4)) : 0;
+        // between 1 and (MAX_PEOPLE - total people already in the building) / 4,
+        // this gives us a better distribution of the number of people in each floor
+        uint8_t numberPeopleFloor = shouldHavePeople ? (rand() % ((MAX_PEOPLE - numberPeople) / 4)) : 0;
 
-        if (i == numberFloors - 1) {
-            numberPeopleFloor += MAX_PEOPLE - numberWaitingPeople;
-        }
-
-        numberWaitingPeople += numberPeopleFloor;
+        numberPeople += numberPeopleFloor;
 
         cout << "    Initializing floor " << (uint32_t) i << " with " << (uint32_t) numberPeopleFloor << " people." << endl;
 
-        Floor *floor = new Floor(i);
-        floor->init(numberPeopleFloor);
-
+        Floor *floor = new Floor(i, numberPeopleFloor);
         floors.insert(make_pair(i, floor));
     }
 
@@ -87,7 +82,7 @@ void Building::init() {
     // Instantiate the elevator with created floors
     elevator = new Elevator(&floors);
 
-    cout << "Total people in the building is " << (uint32_t) numberWaitingPeople << endl << endl;
+    cout << "Total people in the building is " << (uint32_t) numberPeople << endl << endl;
 }
 
 /**
@@ -101,6 +96,6 @@ void Building::run() {
         numberCycles++;
     }
 
-    cout << "Finished. Total delivered people: " << (uint32_t) elevator->getNumberDeliveredPeople() << "/" << (uint32_t) numberWaitingPeople << endl;
+    cout << "Finished. Total delivered people: " << (uint32_t) elevator->getNumberDeliveredPeople() << "/" << (uint32_t) numberPeople << endl;
     cout << "Number of elevator cycles: " << (uint32_t) numberCycles << endl;
 }

@@ -5,6 +5,11 @@
 
 class Floor;
 
+enum ElevatorDirection_t {
+    ELEVATOR_DIRECTION_UP,
+    ELEVATOR_DIRECTION_DOWN
+};
+
 using namespace std;
 
 class Elevator {

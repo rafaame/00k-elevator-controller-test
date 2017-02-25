@@ -161,7 +161,6 @@ void Elevator::deliverPeople() {
         Person *person = *it;
 
         if (person->getDestinationFloor()->getNumber() == currentFloor->getNumber()) {
-            currentFloor->deliverPerson(person);
             numberDeliveredPeople++;
 
             it = people.erase(it);
@@ -260,10 +259,11 @@ bool Elevator::cycle() {
 
     cout << "    We reached the next destination floor" << endl;
 
+    uint8_t currentNumberDeliveredPeople = numberDeliveredPeople;
     deliverPeople();
     fillWithPeople();
 
-    cout << "Delivered " << (uint32_t) numberDeliveredPeople << " people in this cycle." << endl << endl;
+    cout << "Delivered " << (uint32_t) (numberDeliveredPeople - currentNumberDeliveredPeople) << " people in this cycle." << endl << endl;
 
     return true;
 }
