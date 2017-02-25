@@ -16,7 +16,16 @@ Floor::Floor(uint8_t number) {
  * Class destructor.
  */
 Floor::~Floor() {
-    clear();
+    for (auto it = waitingPeople.begin(); it != waitingPeople.end(); it++) {
+        delete *it;
+    }
+
+    for (auto it = deliveredPeople.begin(); it != deliveredPeople.end(); it++) {
+        delete *it;
+    }
+
+    waitingPeople.clear();
+    deliveredPeople.clear();
 }
 
 /**
@@ -32,24 +41,6 @@ void Floor::init(uint8_t numberPeople) {
 
         waitingPeople.push_back(person);
     }
-}
-
-/**
- * Clears the floor (deletes all people in the floor).
- *
- * @return void
- */
-void Floor::clear() {
-    for (auto it = waitingPeople.begin(); it != waitingPeople.end(); it++) {
-        delete *it;
-    }
-
-    for (auto it = deliveredPeople.begin(); it != deliveredPeople.end(); it++) {
-        delete *it;
-    }
-
-    waitingPeople.clear();
-    deliveredPeople.clear();
 }
 
 /**

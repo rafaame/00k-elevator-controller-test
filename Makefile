@@ -35,6 +35,6 @@ clean:
 	@rm -rf $(TARGET) $(TARGET).exe $(OBJDIR)/*.o *.bak *~ *%
 
 memtest:
-	valgrind --tool=memcheck --leak-check=full --show-reachable=yes ./main
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes ./bin/main
 
 include deps.d

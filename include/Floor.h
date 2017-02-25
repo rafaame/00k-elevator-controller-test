@@ -25,7 +25,6 @@ public:
     void deliverPerson(Person *person);
 
     void init(uint8_t numberPeople);
-    void clear();
 };
 
 #endif

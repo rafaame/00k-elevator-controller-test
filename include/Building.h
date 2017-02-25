@@ -21,7 +21,6 @@ public:
     Elevator *getElevator() { return elevator; }
 
     void init();
-    void clear();
     void run();
 };
 

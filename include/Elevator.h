@@ -19,7 +19,7 @@ private:
     uint8_t numberDeliveredPeople;
 
 public:
-    Elevator();
+    Elevator(FloorMap *floors);
     ~Elevator();
 
     Floor *getCurrentFloor() { return currentFloor; }
@@ -33,7 +33,6 @@ public:
     void deliverPeople();
     void fillWithPeople();
 
-    void init(FloorMap *floors);
     bool cycle();
 };
 

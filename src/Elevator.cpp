@@ -7,11 +7,12 @@ using namespace std;
 /**
  * Class constructor.
  */
-Elevator::Elevator() {
-    currentFloor = NULL;
+Elevator::Elevator(FloorMap *floors) {
+    currentFloor = floors->at(0);
     nextFloor = NULL;
+    direction = ELEVATOR_DIRECTION_UP;
 
-    this->floors = NULL;
+    this->floors = floors;
 
     numberDeliveredPeople = 0;
 }
@@ -122,21 +123,6 @@ Floor *Elevator::findNextFloor() {
     }
 
     return closestFloor;
-}
-
-/**
- * Initializes the elevator. The elevator starts in the first floor, in the up direction.
- *
- * @param FloorMap*  floors  A pointer to the building floors map.
- *
- * @return void
- */
-void Elevator::init(FloorMap *floors) {
-    currentFloor = floors->at(0);
-    nextFloor = NULL;
-
-    direction = ELEVATOR_DIRECTION_UP;
-    this->floors = floors;
 }
 
 /**

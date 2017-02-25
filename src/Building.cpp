@@ -11,14 +11,20 @@ using namespace std;
 Building::Building() {
     numberWaitingPeople = 0;
 
-    elevator = new Elevator();
+    elevator = NULL;
 }
 
 /**
  * Class destructor.
  */
 Building::~Building() {
-    clear();
+    for (auto it = floors.begin(); it != floors.end(); it++) {
+        delete it->second;
+    }
+
+    floors.clear();
+
+    delete elevator;
 }
 
 /**
@@ -43,6 +49,11 @@ void Building::init() {
         // The number of people in the floor (if it should have any) is an integer
         // between 1 and (MAX_PEOPLE - total people already in the building) / 4
         uint8_t numberPeopleFloor = shouldHavePeople ? (rand() % ((MAX_PEOPLE - numberWaitingPeople) / 4)) : 0;
+
+        if (i == numberFloors - 1) {
+            numberPeopleFloor += MAX_PEOPLE - numberWaitingPeople;
+        }
+
         numberWaitingPeople += numberPeopleFloor;
 
         cout << "    Initializing floor " << (uint32_t) i << " with " << (uint32_t) numberPeopleFloor << " people." << endl;
@@ -73,25 +84,10 @@ void Building::init() {
         }
     }
 
-    // Init the elevator with created floors
-    elevator->init(&floors);
+    // Instantiate the elevator with created floors
+    elevator = new Elevator(&floors);
 
     cout << "Total people in the building is " << (uint32_t) numberWaitingPeople << endl << endl;
-}
-
-/**
- * Clears the building (deletes all floors).
- *
- * @return void
- */
-void Building::clear() {
-    numberWaitingPeople = 0;
-
-    for (auto it = floors.begin(); it != floors.end(); it++) {
-        delete it->second;
-    }
-
-    floors.clear();
 }
 
 /**
